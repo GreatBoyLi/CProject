@@ -1,7 +1,7 @@
 # CProject
 C and C++ code during graduate studies
 
-# VSCode
+# VSCode for Windows
 .code-workspace:
 {
 	"folders": [
@@ -63,11 +63,11 @@ launch.json:
             "program": "${workspaceFolder}/build/main.exe",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "C:/TDM-GCC-64/bin",
+            "cwd": "/usr/bin",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
-            "miDebuggerPath": "C:/TDM-GCC-64/bin/gdb.exe",
+            "miDebuggerPath": "/usr/bin/lldb",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
@@ -96,5 +96,69 @@ cd build
 
 cmake ..
 
-# Windows 环境 获得.exe文件
+# Windows 环境 获得.exe文件可运行文件
 mingw32-make.exe   
+
+# macOS 获得可运行文件
+make
+
+# VSCode for MacOS
+tasks.json:
+{
+	"version": "2.0.0",
+	"options": {
+		"cwd": "${workspaceFolder}/build/"
+	},
+	
+	"tasks": [
+		{
+			"label": "cmake",
+			"type": "shell",
+			"command": "cmake",
+			"args": [
+				".."
+			]
+		},
+		{
+			"label": "make",
+			"group":{
+				"kind":"build",
+				"isDefault":true
+			},
+			"command": "make",
+			"args":[
+			]
+		},
+		{
+			"label":"Build my project",
+			"dependsOn":[
+				"cmake",
+				"make"
+			]
+		}
+	]
+}
+
+launch.json:
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(lldb) Launch",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/AES_main",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "/usr/bin",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "preLaunchTask": "Build my project"
+        }
+
+    ]
+}
