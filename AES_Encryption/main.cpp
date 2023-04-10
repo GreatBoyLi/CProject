@@ -2,143 +2,111 @@
 #include "decryption.h"
 #include <iostream>
 #include <bitset>
- 
-int main(){
-	//种子密钥 
-	byte1 key[16] = {0x2b, 0x7e, 0x15, 0x16, 
-					0x28, 0xae, 0xd2, 0xa6, 
-					0xab, 0xf7, 0x15, 0x88, 
-					0x09, 0xcf, 0x4f, 0x3c};
-//	byte1 key[16] = {0x00, 0x01, 0x02, 0x03, 
-//					0x04, 0x05, 0x06, 0x07, 
-//					0x08, 0x09, 0x01, 0x02, 
-//					0x03, 0x04, 0x05, 0x06};
-//	byte1 key[16] = {0x00, 0x01, 0x02, 0x03, 
-//						0x04, 0x05, 0x06, 0x07, 
-//						0x08, 0x09, 0x0a, 0x0b, 
-//						0x0c, 0x0d, 0x0e, 0x0f};
- 
- 
-	//输入的明文 
-	byte1 sta_matr[16]={0x32,0x88,0x31,0xe0,
-						0x43,0x5a,0x31,0x37,
-						0xf6,0x30,0x98,0x07,
-						0xa8,0x8d,0xa2,0x34};
-//    byte1 sta_matr[16]={0x61,0x62,0x63,0x64,
-//    					0x65,0x66,0x67,0x68,
-//    					0x69,0x6A,0x6B,0x6C,
-//    					0x6D,0x6E,0x6F,0x70					
-//	}; 
-//	byte1 sta_matr[16] = {0x00, 0x11, 0x22, 0x33, 
-//							0x44, 0x55, 0x66, 0x77, 
-//							0x88, 0x99, 0xaa, 0xbb, 
-//							0xcc, 0xdd, 0xee, 0xff};
- 
-						
-	//进行密钥扩展
-	word w[4*(Nr+1)];
-	KeyExpansion(key,w); 
-	
-	//输出密钥
-	cout<<"密钥是:"<<endl;
-	for(int i=0;i<16;i++){
-		cout<<hex<<key[i].to_ulong()<<"  ";
-		if((i+1)%4==0)cout<<endl;
-	}   
-	cout<<endl;
-	//输出明文
-	cout<<"明文是:"<<endl;
-	for(int i=0;i<16;i++){
-		cout<<hex<<sta_matr[i].to_ulong()<<"  ";
-		if((i+1)%4==0)cout<<endl;
-	}  
-	//输出密文
-	cout<<endl;
-	encrypt(sta_matr,w);
-	cout<<"密文是:"<<endl;
-	for(int i=0;i<16;i++){
-		cout<<hex<<sta_matr[i].to_ulong()<<"  ";
-		if((i+1)%4==0)cout<<endl;
-	}  
-	
-	//再次进行解密
-	cout<<endl;
-	cout<<"密文解密是:"<<endl;
-	decrypt(sta_matr,w);
-	for(int i=0;i<16;i++){
-		cout<<hex<<sta_matr[i].to_ulong()<<"  ";
-		if((i+1)%4==0)cout<<endl;
-	}  
+#include <string>
+#include <vector>
+#include <iomanip>
+
+int main()
+{
+	// 种子密钥
+	byte1 key[16] = {0x2b, 0x7e, 0x15, 0x16,
+					 0x28, 0xae, 0xd2, 0xa6,
+					 0xab, 0xf7, 0x15, 0x88,
+					 0x09, 0xcf, 0x4f, 0x3c};
+
+	// 进行密钥扩展
+	word w[4 * (Nr + 1)];
+	KeyExpansion(key, w);
+
+	// 输出密钥
+	cout << "密钥是:" << endl;
+	for (int i = 0; i < 16; i++)
+	{
+		cout << setfill('0') << setw(2) << hex << key[i].to_ulong() << "  ";
+		if ((i + 1) % 4 == 0)
+			cout << endl;
+	}
+	cout << endl;
+	cout << "请输入要加密的明文：" << endl;
+	string inputString;
+	getline(cin, inputString);
+	cout << endl;
+	int num = inputString.size() / 16;
+	vector<byte1 *> a;
+	for (int i = 0; i < num; i++)
+	{
+		byte1 *b = new byte1[16];
+		for (int j = 0; j < 16; j++)
+		{
+			b[j] = byte1(inputString[i * 16 + j]);
+		}
+		a.push_back(b);
+	}
+	int remainder = inputString.size() % 16;
+	if (remainder != 0)
+	{
+		byte1 *b = new byte1[16];
+		for (int i = 0; i < remainder; i++)
+		{
+			b[i] = byte1(inputString[num * 16 + i]);
+		}
+		for (int j = remainder; j < 16; j++)
+		{
+			b[j] = byte1(' ');
+		}
+		a.push_back(b);
+	}
+	// 输出明文
+	cout << "未加密的明文是:" << endl;
+	for (int i = 0; i < a.size(); i++)
+	{
+		for (int j = 0; j < 16; j++)
+		{
+			cout << setfill('0') << setw(2) << hex << a[i][j].to_ulong() << "  ";
+			if ((j + 1) % 4 == 0)
+				cout << endl;
+		}
+		cout << endl;
+	}
+
+	// 输出密文
+	cout << "加密后的密文是:" << endl;
+	for (int i = 0; i < a.size(); i++)
+	{
+		encrypt(a[i], w);
+		for (int j = 0; j < 16; j++)
+		{
+			cout << setfill('0') << setw(2) << hex << a[i][j].to_ulong() << "  ";
+			if ((j + 1) % 4 == 0)
+				cout << endl;
+		}
+		cout << endl;
+	}
+
+	// 再次进行解密
+	cout << "解密后的明文是:" << endl;
+	for (int i = 0; i < a.size(); i++)
+	{
+		decrypt(a[i], w);
+		for (int j = 0; j < 16; j++)
+		{
+			cout << setfill('0') << setw(2) << hex << a[i][j].to_ulong() << "  ";
+			if ((j + 1) % 4 == 0)
+				cout << endl;
+		}
+		cout << endl;
+	}
+
+	cout << "英文是：" << endl;
+	string c = "";
+	for (int i = 0; i < a.size(); i++)
+	{
+		for (int j = 0; j < 16; j++)
+		{
+			c += static_cast<char>(a[i][j].to_ulong());
+		}
+	}
+	cout << c << endl;
+	cout << endl;
 	return 0;
-	
- 
- 
-	
-/*
-	以下是函数正确性验证部分
-		1 密钥扩展验证
-			for(int i=0;i<4*(Nr+1);i++){
-			cout<<"w["<<dec<<i<<"]="<<hex<<w[i].to_ulong()<<endl;
-			}
-		
-		2 验证有限域乘法
-			byte1 temp=GFMul(0x57,0x83);
-			for(int i=0;i<8;i++){
-				cout<<temp[i]<<" ";}
-				cout<<endl;
-			cout<<"0x57*0x83:"<<hex<<temp.to_ulong(); 
-		
-		3 测试字节代换有无问题
-			Subbyte1s(sta_matr);
-			cout<<"字节代换后是:"<<endl;
-			for(int i=0;i<16;i++){
-				cout<<hex<<sta_matr[i].to_ulong()<<"  ";
-				if((i+1)%4==0)cout<<endl;
-			} 
-			
-		4 测试列混合函数是否正确
-			byte1 s[16] = {0xc9,0xe5,0xfd,0x2b, 
-					0x7a,0xf2,0x78,0x6e,
-					0x63,0x9c,0x26,0x67,
-					0xb0,0xa7,0x82,0xe5}; 
-			MixColumns(s,encry_s);
-			for(int i=0;i<16;i++){
-				cout<<hex<<s[i].to_ulong()<<"  ";
-				if((i+1)%4==0)cout<<endl;
-			} 	
-			
-		
-		
-*/	
-	
-/*
-	以下维验证bitset类型数据的存储以及计算方式
-		1 小端模式：即常规思维的0011 0011在计算机存储变成1100 1100
-		2 定义的两个byte1(bitset<8>)数据进行异或也是按照两个小端形式的数据进行异或，存储的依旧是小端格式 
-		3 如果按位输出 小端格式  按字节输出 大端格式 
-		4 比如使用a则正常顺序(大端) 仅当按位的时候才是小端 
-		5 a^b 按字节输出是正常大端顺序 
-			byte1 temp0=0x57;
-			cout<<temp<<endl;
-			cout<<(temp>>1)<<endl;
-			cout<<temp[5];
-			byte1 temp2=0x83;
-			cout<<(temp^temp2);
-			cout<<"temp1:";
-			for(int i=0;i<8;i++){
-				cout<<temp[i]<<" ";
-			} 
-			cout<<endl; 
-			cout<<"temp2:";
-			for(int i=0;i<8;i++){
-				cout<<temp2[i]<<" ";
-			} 
-			cout<<endl; 
-			cout<<"temp1^temp2:";
-			byte1 temp3=temp^temp2;
-			for(int i=0;i<8;i++){
-				cout<<temp3[i]<<" ";
-			} 
-			cout<<dec<<temp3.to_ulong();
-*/		 
-} 
+}

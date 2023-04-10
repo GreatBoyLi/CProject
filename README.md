@@ -98,6 +98,7 @@ cmake ..
 
 # Windows 环境 获得.exe文件可运行文件
 mingw32-make.exe   
+chcp 65001 设置cmd为UTF-8编码
 
 # macOS 获得可运行文件
 make
