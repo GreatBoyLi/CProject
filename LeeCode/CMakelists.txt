@@ -1,0 +1,5 @@
+project(LeetCode)
+aux_source_directory(src DIR_SRC)
+aux_source_directory(. DIR_CUR)
+add_executable(LeetCode_main ${DIR_SRC} ${DIR_CUR})
+include_directories(include)
