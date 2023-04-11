@@ -10,8 +10,8 @@ int Solution::rob_198(vector<int> &nums)
     {
         dp[i] = new int[2];
     }
-    dp[0][0] = 0;
-    dp[0][1] = nums[0];
+    dp[0][0] = 0;   // 第i个房子不偷
+    dp[0][1] = nums[0];  // 第i个房子偷
     for (int i = 1; i < length; i++)
     {
         dp[i][0] = max(dp[i - 1][0], dp[i - 1][1]);
