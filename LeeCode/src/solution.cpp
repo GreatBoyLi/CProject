@@ -12,8 +12,8 @@ int Solution::rob_198(vector<int> &nums)
     {
         dp[i] = new int[2];
     }
-    dp[0][0] = 0;   // 第i个房子不偷
-    dp[0][1] = nums[0];  // 第i个房子偷
+    dp[0][0] = 0;       // 第i个房子不偷
+    dp[0][1] = nums[0]; // 第i个房子偷
     for (int i = 1; i < length; i++)
     {
         dp[i][0] = max(dp[i - 1][0], dp[i - 1][1]);
@@ -22,12 +22,12 @@ int Solution::rob_198(vector<int> &nums)
     return max(dp[length - 1][0], dp[length - 1][1]);
 }
 
-
 int Solution::countPrimes_204(int n)
 {
     int count = 0;
-    while(n > 1){
-        if(isPrime(n))
+    while (n > 1)
+    {
+        if (isPrime(n))
         {
             count++;
         }
@@ -36,33 +36,64 @@ int Solution::countPrimes_204(int n)
     return count;
 }
 
-
 int Solution::isPrime(int n)
 {
     int s = sqrt(n);
-    while(s > 1)
+    while (s > 1)
     {
-        if(n % s == 0)
+        if (n % s == 0)
             return 0;
         s--;
     }
     return 1;
 }
 
-
 int Solution::countPrimes_204_1(int n)
 {
     vector<int> isPrime(n, 1);
     int ans = 0;
-    for (int i = 2; i < n; ++i) {
-        if (isPrime[i]) {
+    for (int i = 2; i < n; ++i)
+    {
+        if (isPrime[i])
+        {
             ans += 1;
-            if ((long long)i * i < n) {
-                for (int j = i * i; j < n; j += i) {
+            if ((long long)i * i < n)
+            {
+                for (int j = i * i; j < n; j += i)
+                {
                     isPrime[j] = 0;
                 }
             }
         }
     }
     return ans;
+}
+
+int Solution::hammingWeight(uint32_t n)
+{
+    int count = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (n & (1 << i))
+            count++;
+    }
+    return count;
+}
+
+int Solution::hammingDistance(int x, int y)
+{
+    int count = 0;
+    int z = x ^ y;
+    for (int i = 0; i < 32; i++)
+    {
+        if (z & (1 << i))
+            count++;
+    }
+    return count;
+}
+
+int Solution::hammingDistance_1(int x, int y )
+{
+    bitset<32> bit_x(x), bit_y(y);
+    return (bit_x ^ bit_y).count();
 }
