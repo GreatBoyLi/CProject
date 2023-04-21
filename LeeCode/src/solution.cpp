@@ -1,6 +1,7 @@
 #include "solution.h"
 #include <math.h>
 #include <iostream>
+#include <bitset>
 
 int Solution::rob_198(vector<int> &nums)
 {
@@ -92,8 +93,43 @@ int Solution::hammingDistance(int x, int y)
     return count;
 }
 
-int Solution::hammingDistance_1(int x, int y )
+int Solution::hammingDistance_1(int x, int y)
 {
     bitset<32> bit_x(x), bit_y(y);
     return (bit_x ^ bit_y).count();
+}
+
+int Solution::reverseBits(uint32_t n)
+{
+    bitset<32> bit_n(n);
+    bitset<1> a;
+    for (int i = 0; i < 16; i++)
+    {
+        a[0] = bit_n[i];
+        bit_n[i] = bit_n[31 - i];
+        bit_n[31 - i] = a[0];
+    }
+    return bit_n.to_ulong();
+}
+
+vector<vector<int>> Solution::generate(int numRows)
+{
+    vector<vector<int>> result;
+    for (int i = 0; i < numRows; i++)
+    {
+        vector<int> temp;
+        for (int j = 0; j <= i; j++)
+        {
+            if (j == 0 || j == i)
+            {
+                temp.push_back(1);
+            }
+            else
+            {
+                temp.push_back(result[i - 1][j - 1] + result[i - 1][j]);
+            }
+        }
+        result.push_back(temp);
+    }
+    return result;
 }

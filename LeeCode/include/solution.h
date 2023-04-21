@@ -2,6 +2,7 @@
 #define SOLUTION_H
 
 #include <vector>
+#include <cstdint>
 
 using namespace std;
 
@@ -21,6 +22,10 @@ public:
     int hammingDistance(int x, int y);
     // 461. 汉明距离
     int hammingDistance_1(int x, int y);
+    // 190. 颠倒二进制位
+    int reverseBits(uint32_t n);
+    // 118. 杨辉三角
+    vector<vector<int>> generate(int numRows);
 };
 
 #endif
