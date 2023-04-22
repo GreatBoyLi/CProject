@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <cstdint>
+#include <string>
 
 using namespace std;
 
@@ -26,6 +27,8 @@ public:
     int reverseBits(uint32_t n);
     // 118. 杨辉三角
     vector<vector<int>> generate(int numRows);
+    // 20. 有效的括号
+    bool isValid(string s);
 };
 
 #endif
