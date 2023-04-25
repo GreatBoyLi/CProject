@@ -4,6 +4,7 @@
 #include <vector>
 #include <cstdint>
 #include <string>
+#include "tree.h"
 
 using namespace std;
 
@@ -29,6 +30,8 @@ public:
     vector<vector<int>> generate(int numRows);
     // 20. 有效的括号
     bool isValid(string s);
+    // 94. 二叉树的中序遍历
+    vector<int> inorderTraversal(TreeNode *root);
 };
 
-#endif
+#endif // !SOLUTION_H

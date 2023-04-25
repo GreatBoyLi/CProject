@@ -156,7 +156,7 @@ bool Solution::isValid(string s)
                 return false;
             st.pop();
         }
-        else if(c == '}')
+        else if (c == '}')
         {
             if (st.empty() || st.top() != '{')
                 return false;
@@ -166,4 +166,23 @@ bool Solution::isValid(string s)
     if (!st.empty())
         return false;
     return true;
+}
+
+vector<int> Solution::inorderTraversal(TreeNode *p)
+{
+    vector<int> result;
+    stack<TreeNode *> st;
+    while (p != nullptr || !st.empty())
+    {
+        while (p != nullptr)
+        {
+            st.push(p);
+            p = p->left;
+        }
+        p = st.top();
+        st.pop();
+        result.push_back(p->val);
+        p = p->right;
+    }
+    return result;
 }
