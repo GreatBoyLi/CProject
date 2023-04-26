@@ -32,6 +32,8 @@ public:
     bool isValid(string s);
     // 94. 二叉树的中序遍历
     vector<int> inorderTraversal(TreeNode *root);
+    // 103. 二叉树的锯齿形层序遍历
+    vector<vector<int>> zigzagLevelOrder(TreeNode *root);
 };
 
 #endif // !SOLUTION_H

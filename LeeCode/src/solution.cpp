@@ -3,6 +3,7 @@
 #include <iostream>
 #include <bitset>
 #include <stack>
+#include <queue>
 
 int Solution::rob_198(vector<int> &nums)
 {
@@ -183,6 +184,53 @@ vector<int> Solution::inorderTraversal(TreeNode *p)
         st.pop();
         result.push_back(p->val);
         p = p->right;
+    }
+    return result;
+}
+
+vector<vector<int>> Solution::zigzagLevelOrder(TreeNode *root)
+{
+    stack<TreeNode *> a;
+    stack<TreeNode *> b;
+    vector<vector<int>> result;
+    if (root == nullptr)
+        return result;
+    bool flag = true;
+    b.push(root);
+    while (!b.empty() || !a.empty())
+    {
+        if (flag)
+        {
+            flag = false;
+            vector<int> temp;
+            while (!b.empty())
+            {
+                TreeNode *node = b.top();
+                if (node->left != nullptr)
+                    a.push(node->left);
+                if (node->right != nullptr)
+                    a.push(node->right);
+                temp.push_back(node->val);
+                b.pop();
+            }
+            result.push_back(temp);
+        }
+        else
+        {
+            flag = true;
+            vector<int> temp;
+            while (!a.empty())
+            {
+                TreeNode *node = a.top();
+                if (node->right != nullptr)
+                    b.push(node->right);
+                if (node->left != nullptr)
+                    b.push(node->left);
+                temp.push_back(node->val);
+                a.pop();
+            }
+            result.push_back(temp);
+        }
     }
     return result;
 }
