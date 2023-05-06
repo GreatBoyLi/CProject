@@ -1,4 +1,9 @@
 project(LeetCode)
+
+#set<CMAKE_CXX_STANDARD_REQUIRED ON>
+
+set(CMAKE_CXX_STANDARD 11)
+
 aux_source_directory(src DIR_SRC)
 aux_source_directory(. DIR_CUR)
 add_executable(LeetCode_main ${DIR_SRC} ${DIR_CUR})

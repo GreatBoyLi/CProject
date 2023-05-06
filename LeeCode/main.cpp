@@ -35,5 +35,11 @@ int main(int argc, char *argv[])
     else
         cout << "000000" << endl;
     cout << "x²" << endl;
+    vector<int> a = {1, 2, 3, 4, 5};
+    a.erase(a.begin());
+    for (auto i : a)
+    {
+        cout << i << endl;
+    }
     return 0;
 }
