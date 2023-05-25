@@ -234,3 +234,50 @@ vector<vector<int>> Solution::zigzagLevelOrder(TreeNode *root)
     }
     return result;
 }
+
+void Solution::Split(int *array, int &first, int &second, int n)
+{
+    // 中位数
+    int median = n / 2;
+    // 循环求解中位数的第一个出现的位置
+    for (int i = median; i >= 0; i--)
+    {
+        if (array[i] == array[median])
+        {
+            first = i;
+        }
+        else
+            break;
+    }
+    // 循环求解中位数的最后一个出现的位置
+    for (int i = median; i < n; i++)
+    {
+        if (array[i] == array[median])
+        {
+            second = i;
+        }
+        else
+            break;
+    }
+}
+
+void Solution::Mode(int *array, int &mode, int &multiplicity, int n)
+{
+    int left, right;
+    Split(array, left, right, n); // 先分割
+    int num = n / 2;              // 第一组的中位数（假设为众数）
+    int cnt = right - left + 1;   // 第一组的中位数出现的个数（重数）
+    if (cnt > multiplicity)
+    {
+        multiplicity = cnt;
+        mode = array[num];
+    }
+    if (left + 1 > multiplicity)
+    {
+        Mode(array, mode, multiplicity, left + 1);
+    }
+    if (n - right > multiplicity)
+    {
+        Mode(array + right + 1, mode, multiplicity, n - right);
+    }
+}

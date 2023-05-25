@@ -34,6 +34,10 @@ public:
     vector<int> inorderTraversal(TreeNode *root);
     // 103. 二叉树的锯齿形层序遍历
     vector<vector<int>> zigzagLevelOrder(TreeNode *root);
+    // by 李骏
+    void Split(int *array, int &first, int &second, int n);
+    // by 李骏
+    void Mode(int *array, int &mode, int &multiplicity, int n);
 };
 
 #endif // !SOLUTION_H
