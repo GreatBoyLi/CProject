@@ -35,11 +35,18 @@ int main(int argc, char *argv[])
     else
         cout << "000000" << endl;
     cout << "x²" << endl;
-
-    int a[] = {1, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5};
+    
+    int b[] = {1, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5};
     int n = 17;
     int mode = 0, multiplicity = 0;
-    solution.Mode(a, mode, multiplicity, n);
+    solution.Mode(b, mode, multiplicity, n);
     cout << mode << " " << multiplicity << endl;
+
+    vector<int> a = {1, 2, 3, 4, 5};
+    a.erase(a.begin());
+    for (auto i : a)
+    {
+        cout << i << endl;
+    }
     return 0;
 }
