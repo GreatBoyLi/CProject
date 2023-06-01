@@ -40,6 +40,14 @@ public:
     void Mode(int *array, int &mode, int &multiplicity, int n);
     // 88. 合并两个有序数组
     void merge(vector<int> &nums1, int m, vector<int> &nums2, int n);
+    // by 李骏
+    int vis[6];
+    void f(int *array, int flag, int n);
+    inline Solution()
+    {
+        for (int i = 0; i < 6; i++)
+            vis[i] = 0;
+    }
 };
 
 #endif // !SOLUTION_H

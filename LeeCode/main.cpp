@@ -36,11 +36,13 @@ int main(int argc, char *argv[])
         cout << "000000" << endl;
     cout << "x²" << endl;
 
-    vector<int> a = {1, 2, 3, 0, 0, 0};
-    vector<int> b = {2, 5, 6};
-    solution.merge(a, 3, b, 3);
-    for (int x : a)
-        cout << x << " ";
+    // vector<int> a = {1, 2, 3, 0, 0, 0};
+    // vector<int> b = {2, 5, 6};
+    // solution.merge(a, 3, b, 3);
+    // for (int x : a)
+    //     cout << x << " ";
 
+    int a[5];
+    solution.f(a, 0, 5);
     return 0;
 }

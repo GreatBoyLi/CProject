@@ -306,3 +306,26 @@ void Solution::merge(vector<int> &nums1, int m, vector<int> &nums2, int n)
         result.push_back(nums2[j]);
     copy(result.begin(), result.end(), nums1.begin());
 }
+
+void Solution::f(int *array, int flag, int n)
+{
+    if(flag >= n)
+    {
+        if(array[0] * array[1] - array[2] * array[3] - array[4] == 1)
+        {
+            cout << "a = " << array[0] << "  b = " << array[1] << "  c = " << array[2] << "  d = " << array[3] << "  e = " << array[4] << endl;
+        }
+        return;
+    }
+
+    for ( int i = 1; i <= n; i++)
+    {
+        if(vis[i] == 0) // 每个数都不同，因此设置标志位0表示未访问，1表示访问
+        {
+            vis[i] = 1;
+            array[flag] = i;            
+            f(array, flag + 1, n); // 回溯，递归调用自身，参数需要发生变化
+            vis[i] = 0;
+        }
+    }
+}
