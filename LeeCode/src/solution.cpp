@@ -281,3 +281,28 @@ void Solution::Mode(int *array, int &mode, int &multiplicity, int n)
         Mode(array + right + 1, mode, multiplicity, n - right);
     }
 }
+
+void Solution::merge(vector<int> &nums1, int m, vector<int> &nums2, int n)
+{
+    vector<int> result;
+    result.reserve(m + n);
+    int i, j = 0;
+    for (; i < m && j < n;)
+    {
+        if (nums1[i] <= nums2[j])
+        {
+            result.push_back(nums1[i]);
+            i++;
+        }
+        else
+        {
+            result.push_back(nums2[j]);
+            j++;
+        }
+    }
+    for (; i < m; i++)
+        result.push_back(nums1[i]);
+    for (; j < n; j++)
+        result.push_back(nums2[j]);
+    copy(result.begin(), result.end(), nums1.begin());
+}
