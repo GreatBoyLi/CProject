@@ -168,3 +168,13 @@ launch.json:
 # VSCode 若Debug时想看一个动态数组中的元素值，那么可使用下面方法
 在WATCH中添加  **dp@2@4   这是一个名为dp的二维数组有 4行 2列    二维数组好像不行
                *dp@4     这是一个名yldp的一维数组有 4个元素	   一维数组是可以的
+
+
+
+# vcpkg的使用，不用vcpkg.json
+若要和cmake一起使用，不用vcpkg.json，手动下载第三方库的话，需要在CMakeLists.txt中添加第三方库的信息，且需要在cmake命令中添加-D参数，如下：
+		-DCMAKE_TOOLCHAIN_FILE=E:/3D_Reconstruction/vcpkg/scripts/buildsystems/vcpkg.cmake
+
+# vcpkg的使用，使用vcpkg.json
+若要和cmake一起使用，使用vcpkg.json，需要设置VCPKG_ROOT变量，设置成环境变量可以，也可以在CMakeLists.txt文件中 SET(VCPKG_ROOT "E:/3D_Reconstruction/vcpkg")，然后在cmake命令中添加-D参数，如下：
+		-DCMAKE_TOOLCHAIN_FILE=E:/3D_Reconstruction/vcpkg/scripts/buildsystems/vcpkg.cmake

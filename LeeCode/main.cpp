@@ -1,6 +1,7 @@
 #include <iostream>
 #include "solution.h"
 #include <bitset>
+#include <fmt/args.h>
 
 using namespace std;
 
