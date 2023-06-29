@@ -6,11 +6,11 @@ cmake_minimum_required(VERSION 3.26)
 
 set(CMAKE_CXX_STANDARD 11)
 
-find_package(fmt CONFIG REQUIRED)
+find_package(Eigen3 CONFIG REQUIRED)
 
 aux_source_directory(src DIR_SRC)
 aux_source_directory(. DIR_CUR)
 add_executable(LeetCode_main ${DIR_SRC} ${DIR_CUR})
 include_directories(include)
 
-target_link_libraries(LeetCode_main PRIVATE fmt::fmt-header-only)
+target_link_libraries(LeetCode_main PRIVATE Eigen3::Eigen)
